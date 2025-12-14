@@ -57,7 +57,7 @@ namespace zRender
 
 		VAO.Bind();
 
-		glDrawArrays(GL_LINES, 0, lines.size());
+		glDrawArrays(GL_LINES, 0, lines.size() / 6);
 
 		VAO.Unbind();
 

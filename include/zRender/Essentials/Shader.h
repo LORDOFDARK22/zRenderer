@@ -6,6 +6,7 @@
 #include <zMath/Vector3.h>
 #include <zMath/Vector4.h>
 #include <zMath/Matrix4x4.h>
+#include "Color.h"
 
 namespace zRender
 {
@@ -19,6 +20,7 @@ namespace zRender
 		uint32_t GetUniformLocation(const std::string& uniformName);
 
 	public:
+		Shader(const std::string& vertexSource, const std::string& fragmentSource);
 		Shader(const char* vertexFile, const char* fragmentFile);
 		~Shader();
 
@@ -36,6 +38,8 @@ namespace zRender
 		void SetUniformMatrix4x4(const std::string& name, const zMath::Matrix4x4& value);
 		//array
 		void SetUniformIntArray(const std::string& name, int size, int array[]);
+		//color
+		void SetUniformColor(const std::string& name, zRender::Color value);
 
 		void Bind();
 		void Unbind();

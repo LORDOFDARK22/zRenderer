@@ -69,7 +69,38 @@ namespace zRender
 		uniformLocationMap.emplace(uniformName, location);
 		return location;
 	}
+	Shader::Shader(const std::string& vertexSource, const std::string& fragmentSource)
+	{
+		uint32_t vertex = CompileShader(GL_VERTEX_SHADER, vertexSource);
+		uint32_t fragment = CompileShader(GL_FRAGMENT_SHADER, fragmentSource);
 
+		if (vertex == 0 || fragment == 0)
+		{
+			std::cout << "Failed to Compile Shader!" << std::endl;
+			return;
+		}
+
+		ID = glCreateProgram();
+
+		glAttachShader(ID, vertex);
+		glAttachShader(ID, fragment);
+
+		glLinkProgram(ID);
+
+		glValidateProgram(ID);
+
+		int success;
+		glGetProgramiv(ID, GL_LINK_STATUS, &success);
+		if (!success)
+		{
+			char infoLog[512];
+			glGetProgramInfoLog(ID, 512, NULL, infoLog);
+			std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
+		}
+
+		glDeleteShader(vertex);
+		glDeleteShader(fragment);
+	}
 	Shader::Shader(const char* vertexFile, const char* fragmentFile)
 	{
 		std::string vertexSource = get_file_contents(vertexFile);
@@ -142,6 +173,10 @@ namespace zRender
 	{
 		//glUniform1iv(GetUniformLocation(name), sizeof(array) / sizeof(int), array);
 		glUniform1iv(GetUniformLocation(name), size, array);
+	}
+	void Shader::SetUniformColor(const std::string& name, zRender::Color value)
+	{
+		glUniform4f(GetUniformLocation(name), value.r, value.g, value.b, value.a);
 	}
 	void Shader::Bind()
 	{

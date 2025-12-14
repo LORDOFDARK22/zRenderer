@@ -1,6 +1,7 @@
 #pragma once
 #include <zMath/Matrix4x4.h>
 #include <zMath/Vector2.h>
+#include <algorithm>
 
 namespace zRender
 {
@@ -26,7 +27,7 @@ namespace zRender
 		inline zMath::Matrix4x4 GetProjection() { return projection; }
 
 		inline void SetPosition(const zMath::Vector2& pos) { position = pos; needsUpdate = true; }
-		inline void SetScale(float scl) { scale = scl; needsUpdate = true; }
+		inline void SetScale(float scl) { scale = std::clamp(scl, 0.1f, 10.0f); needsUpdate = true; }
 
 		void SetWindowSize(int width, int height);
 

@@ -48,7 +48,7 @@ namespace zRender
 
 		VAO.Bind();
 
-		glDrawArrays(GL_POINTS, 0, pixels.size());
+		glDrawArrays(GL_POINTS, 0, pixels.size() / 6);
 
 		VAO.Unbind();
 

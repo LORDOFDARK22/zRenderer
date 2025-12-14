@@ -23,20 +23,19 @@ namespace zRender
 
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
-	Texture::Texture(const std::string& texturePath, bool flipVertically, TextureType type)
+	Texture::Texture(const unsigned char* imageData, int length, bool flipVertically, TextureType type)
 	{
 		stbi_set_flip_vertically_on_load(flipVertically);
-		unsigned char* data = stbi_load(texturePath.c_str(), &width, &height, &numComponents, 0);
+		unsigned char* data = stbi_load_from_memory(imageData, length, &width, &height, &numComponents, STBI_rgb_alpha);
 
 		if (!data)
 		{
-			std::cout << "Failed to Load Image [" << texturePath << "]\n";
+			std::cout << "Failed to Load Texture from Hex!" << std::endl;
 			stbi_image_free(data);
 			return;
 		}
 
 		glGenTextures(1, &ID);
-		//glActiveTexture(slot);
 		glBindTexture(GL_TEXTURE_2D, ID);
 
 		if (type == TextureType::Pixel)
@@ -68,6 +67,73 @@ namespace zRender
 		else if (numComponents == 1)
 		{
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RED, GL_UNSIGNED_BYTE, data);
+		}
+		else
+		{
+			throw std::invalid_argument("Automatic Texture Type rec failed!");
+		}
+
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+		stbi_image_free(data);
+	}
+	Texture::Texture(TextureType type, int width, int height) : width{width}, height{height}, numComponents{0}
+	{
+		if (type != TextureType::FRAMEBUFFER)
+		{
+			std::cout << "Failed to create texture for framebuffer diff type!" << std::endl;
+			return;
+		}
+
+		glGenTextures(1, &ID);
+		glBindTexture(GL_TEXTURE_2D, ID);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	}
+	Texture::Texture(const std::string& texturePath, bool flipVertically, TextureType type)
+	{
+		stbi_set_flip_vertically_on_load(flipVertically);
+		unsigned char* data = stbi_load(texturePath.c_str(), &width, &height, &numComponents, STBI_rgb_alpha);
+		
+		if (!data)
+		{
+			std::cout << "Failed to Load Image [" << texturePath << "]\n";
+			return;
+		}
+
+		glGenTextures(1, &ID);
+		//glActiveTexture(slot);
+		glBindTexture(GL_TEXTURE_2D, ID);
+
+		if (type == TextureType::Pixel)
+		{
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		}
+		else if (type == TextureType::Blended || type == TextureType::None)
+		{
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		}
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+		if (numComponents == 4)
+		{
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		}
+		else if (numComponents == 3)
+		{
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		}
+		else if (numComponents == 1)
+		{
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, width, height, 0, GL_RED, GL_UNSIGNED_BYTE, data);
 		}
 		else
 		{

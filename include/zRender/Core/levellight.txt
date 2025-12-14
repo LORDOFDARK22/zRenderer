@@ -1,0 +1,47 @@
+std::vector<Light> lights =
+	{
+		Light{zMath::Vector2{0,0}, zRender::Color{1.f, 0.9f, 0.7f, 1.f}, 1.0f, 128},
+		Light{zMath::Vector2{50,50}, zRender::Color{1.f, 0.3f, 0.0f, 1.f}, 5.0f, 128},
+		Light{zMath::Vector2{300,200}, zRender::Color{0.2f, 1.0f, 0.0f, 1.f}, 2.0f, 256},
+		Light{zMath::Vector2{500,400}, zRender::Color{0.f, 0.1f, 1.0f, 1.f}, 0.5f, 32}
+	};
+
+	shader.Bind();
+
+	shader.SetUniformInt("u_LightCount", lights.size());
+
+	// إعداد الإضاءة البيئية
+	shader.SetUniformVector3("u_AmbientColor", { 1.0f, 0.5f, 0.5f });
+	shader.SetUniformFloat("u_AmbientStrength", 0.25f); // ضوء عام خفيف
+
+	// ضوء شمسي
+	shader.SetUniformVector3("u_DirectionalDir", { -0.3f, -0.6f, -1.0f });
+	shader.SetUniformVector3("u_DirectionalColor", { 1.0f, 0.95f, 0.8f });
+	shader.SetUniformFloat("u_DirectionalIntensity", 0.7f);
+
+	shader.SetUniformFloat("u_ShadowStrength", 0.6f);
+
+	for (int i = 0; i < lights.size(); i++)
+	{
+		std::string base = "u_Lights[" + std::to_string(i) + "]";
+		shader.SetUniformVector3(base + ".position", { lights[i].position.x, lights[i].position.y, 0.0f });
+		shader.SetUniformVector3(base + ".color", {lights[i].color.r, lights[i].color.g, lights[i].color.b});
+		shader.SetUniformFloat(base + ".intensity", lights[i].intensity);
+		shader.SetUniformFloat(base + ".radius", lights[i].radius);
+	}
+
+struct Light
+{
+	zMath::Vector2 position;
+	zRender::Color color;
+	float intensity, radius;
+};
+
+for (int i = 0; i < lights.size(); i++)
+		{
+			std::string base = "u_Lights[" + std::to_string(i) + "]";
+			shader.SetUniformVector3(base + ".position", { lights[i].position.x, lights[i].position.y, 0.0f });
+			/*shader.SetUniformVector3(base + ".color", { lights[i].color.r, lights[i].color.g, lights[i].color.b });
+			shader.SetUniformFloat(base + ".intensity", lights[i].intensity);
+			shader.SetUniformFloat(base + ".radius", lights[i].radius);*/
+		}

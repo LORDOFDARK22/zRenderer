@@ -25,7 +25,7 @@ namespace zRender
 	{
 		//glfwSetScrollCallback(window.GetWindow(), scroll_callback);
 
-		return {};
+		return {0,0};
 	}
 	bool InputManager::GetMouseButtonDown(MouseButton button)
 	{
@@ -38,7 +38,12 @@ namespace zRender
 	//Gamepad
 	const char* InputManager::GetGamepadName(int gamepadID)
 	{
-		return glfwGetGamepadName(gamepadID);
+		const char* name = glfwGetGamepadName(gamepadID);
+
+		if (name)
+			return name;
+
+		return "Failed to get gamepad name from this ID: " + gamepadID;
 	}
 	bool InputManager::GetGamepadButtonDown(int gamepadID, GamepadButton button)
 	{

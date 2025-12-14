@@ -76,8 +76,8 @@ namespace zRender
         float centerX = position.x + halfW;
         float centerY = position.y + halfH;
 
-        float s = sinf(zMath::Math::radians(rotation));
-        float c = cosf(zMath::Math::radians(rotation));
+        float s = sinf(zMath::Math::Radians(rotation));
+        float c = cosf(zMath::Math::Radians(rotation));
 
         for (int i = 0; i < 6; ++i) {
             // إحداثيات محلية بالنسبة للمركز
@@ -155,8 +155,8 @@ namespace zRender
         float centerX = position.x + halfW;
         float centerY = position.y + halfH;
 
-        float s = sinf(zMath::Math::radians(rotation));
-        float c = cosf(zMath::Math::radians(rotation));
+        float s = sinf(zMath::Math::Radians(rotation));
+        float c = cosf(zMath::Math::Radians(rotation));
 
         for (int i = 0; i < 6; ++i) {
             // إحداثيات محلية بالنسبة للمركز

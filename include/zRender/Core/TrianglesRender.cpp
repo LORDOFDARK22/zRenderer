@@ -52,7 +52,7 @@ namespace zRender
 		triangles.push_back(color.b);
 		triangles.push_back(color.a);
 	}
-	void TrianglesRender::Render(Shader* shader, Camera2D& camera)
+	void TrianglesRender::Render(Shader* shader, Camera2D& camera, bool wirframe)
 	{
 		shader->Bind();
 
@@ -61,7 +61,14 @@ namespace zRender
 
 		VAO.Bind();
 
-		glDrawArrays(GL_TRIANGLES, 0, triangles.size());
+		if (wirframe)
+		{
+			glDrawArrays(GL_LINE_LOOP, 0, triangles.size() / 6);
+		}
+		else
+		{
+			glDrawArrays(GL_TRIANGLES, 0, triangles.size() / 6);
+		}
 
 		VAO.Unbind();
 

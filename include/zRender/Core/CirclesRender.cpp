@@ -4,11 +4,11 @@
 
 namespace zRender
 {
-	CirclesRender::CirclesRender(float lineWidth) : VAO{}, VBO{}, IVBO{}, circles{}, line{true}
+	CirclesRender::CirclesRender(float lineWidth) : VAO{}, VBO{}, IVBO{}, circles{}
 	{
 		glLineWidth(lineWidth);
 	}
-	CirclesRender::CirclesRender() : VAO{}, VBO{}, IVBO{}, circles{}, line{false}
+	CirclesRender::CirclesRender() : VAO{}, VBO{}, IVBO{}, circles{}
 	{
 	}
 	CirclesRender::~CirclesRender()
@@ -70,7 +70,7 @@ namespace zRender
 		circles.push_back(color.b);
 		circles.push_back(color.a);
 	}
-	void CirclesRender::Render(Shader* shader, Camera2D& camera)
+	void CirclesRender::Render(Shader* shader, Camera2D& camera, bool wireframe)
 	{
 		shader->Bind();
 
@@ -79,10 +79,9 @@ namespace zRender
 
 		VAO.Bind();
 
-		if (line)
-			glDrawArraysInstanced(GL_LINE_LOOP, 0, 27, circles.size());
-		else
-			glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 27, circles.size());
+		int vertexCount = 25 + 2;
+		glDrawArraysInstanced(wireframe ? GL_LINE_LOOP : GL_TRIANGLE_FAN, 0, vertexCount, circles.size() / 7);
+
 
 		VAO.Unbind();
 

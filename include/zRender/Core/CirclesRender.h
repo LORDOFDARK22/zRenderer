@@ -17,7 +17,6 @@ namespace zRender
 		VertexBuffer VBO;
 		VertexBuffer IVBO;
 		std::vector<float> circles;
-		bool line = false;
 
 	public:
 		CirclesRender(float lineWidth);
@@ -29,7 +28,7 @@ namespace zRender
 
 		void DrawCircle(const zMath::Vector2& position, float radius, Color color);
 
-		void Render(Shader* shader, Camera2D& camera);
+		void Render(Shader* shader, Camera2D& camera, bool wireframe = false);
 
 	};
 }

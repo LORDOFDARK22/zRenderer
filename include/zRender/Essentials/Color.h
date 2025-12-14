@@ -1,5 +1,7 @@
 #pragma once
 #include <zMath/Vector4.h>
+#include <zMath/Random.h>
+#include <format>
 
 #define WHITE zRender::Color{ 1.0f, 1.0f, 1.0f, 1.0f}
 #define SILVER zRender::Color{ 0.7f, 0.7f, 0.7f, 1.0f}
@@ -18,10 +20,13 @@
 #define PINK zRender::Color{ 1.0f, 0.0f, 1.0f, 1.0f}
 #define MAGENTA zRender::Color{ 1.0f, 0.0f, 0.5f, 1.0f}
 
+#define RandomColor zRender::Color{ zMath::Random::RandomRange(0.0f, 1.0f), zMath::Random::RandomRange(0.0f, 1.0f), zMath::Random::RandomRange(0.0f, 1.0f), 1.0f}
+
 namespace zRender
 {
 	struct Color
 	{
+		//uint8_t
 		float r, g, b, a = 1.0f;
 
 		static Color Convert255(float r, float g, float b, float a)
@@ -43,4 +48,18 @@ namespace zRender
 		}
 
 	};
+
+	struct UColor
+	{
+		uint8_t r, g, b, a;
+	};
 }
+
+template<>
+struct std::formatter<zRender::Color> : std::formatter<std::string>
+{
+	auto format(const zRender::Color& c, std::format_context& ctx) const
+	{
+		return std::formatter<std::string>::format(std::format("( r{}, g{}, b{}, a{} )", c.r, c.g, c.b, c.a), ctx);
+	}
+};

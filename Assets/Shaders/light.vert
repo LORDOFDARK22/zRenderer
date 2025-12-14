@@ -1,6 +1,6 @@
 #version 330 core
 
-layout (location = 0) in vec2 a_Pos;
+layout (location = 0) in vec3 a_Pos;
 layout (location = 1) in vec4 a_Color;
 layout (location = 2) in vec2 a_UV;
 layout (location = 3) in float a_TexIndex;
@@ -11,12 +11,15 @@ uniform mat4 view;
 out vec4 o_Color;
 out vec2 o_UV;
 out float o_TexIndex;
+out vec3 o_WorldPos;
 
 void main()
 {
-	gl_Position = projection * view * vec4(a_Pos, 0.0, 1.0);
+    vec4 worldPos = view * vec4(a_Pos, 1.0);
+    gl_Position = projection * worldPos;
 
-	o_Color = a_Color;
-	o_UV = a_UV;
-	o_TexIndex = a_TexIndex;
+    o_Color = a_Color;
+    o_UV = a_UV;
+    o_TexIndex = a_TexIndex;
+    o_WorldPos = worldPos.xyz;
 }

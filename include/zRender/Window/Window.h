@@ -6,6 +6,8 @@
 #include "../Essentials/Color.h"
 #include <zMath/Vector2.h>
 
+#include <vector>
+
 namespace zRender
 {
 	static float GetTime()
@@ -16,6 +18,9 @@ namespace zRender
 	static void InitZRender()
 	{
 		glfwInit();
+
+		//glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_ES_API);
+
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -23,10 +28,25 @@ namespace zRender
 		std::cout << "[zRender]---success to Init\n";
 	}
 
+	static void SetViewport(int x, int y, int width, int height)
+	{
+		glViewport(x, y, width, height);
+	}
+
+	static void ClearsBuffers(bool color, bool depth, bool stencil)
+	{
+		glClearDepth(1.0f);
+		glClear
+		(
+			(color ? GL_COLOR_BUFFER_BIT : 0) |
+			(depth ? GL_DEPTH_BUFFER_BIT : 0) |
+			(stencil ? GL_STENCIL_BUFFER_BIT : 0)
+		);
+	}
+
 	static void ClearColor(zRender::Color color)
 	{
 		glClearColor(color.r, color.g, color.b, color.a);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
 	enum WindowHint
@@ -56,13 +76,16 @@ namespace zRender
 		bool isVsync;
 
 	public:
-		Window(int width, int height, const std::string& title);
+		Window(int width, int height, const std::string& title, bool fullscreen = false);
 		~Window();
 
 		const int GetWidth() const { return width; }
 		const int GetHeight() const { return height; }
 		const std::string GetTitle() const { return title; }
 		const bool IsVSync() const { return isVsync; }
+
+		std::vector<std::string> GetDropFiles();
+		void DropsClear();
 
 		zMath::Vector2 GetWindowSize();
 
@@ -72,8 +95,9 @@ namespace zRender
 
 		void SetTitle(const std::string& title);
 		void SetVsync(bool value);
-		void SetViewport(int x, int y, int width, int height);
-		void SetWindowIcon(int count, const char* imagePath);
+		void SetWindowIcon(const char* imagePath);
+		void SetWindowIcon(const unsigned char* imageData, int length);
+		void SetFullscreen(bool value);
 
 		void Inputs();
 		void SwapBuffers();

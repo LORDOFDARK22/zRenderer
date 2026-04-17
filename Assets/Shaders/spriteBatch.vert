@@ -11,15 +11,12 @@ uniform mat4 view;
 out vec4 o_Color;
 out vec2 o_UV;
 out float o_TexIndex;
-out vec2 o_WorldPos;
 
 void main()
 {
-    vec4 worldPos = view * vec4(a_Pos, 0.0, 1.0);
-    gl_Position = projection * worldPos;
+	gl_Position = projection * view * vec4(a_Pos, 0.0, 1.0);
 
-    o_Color = a_Color;
-    o_UV = a_UV;
-    o_TexIndex = a_TexIndex;
-    o_WorldPos = worldPos.xy;
+	o_Color = a_Color;
+	o_UV = a_UV;
+	o_TexIndex = a_TexIndex;
 }

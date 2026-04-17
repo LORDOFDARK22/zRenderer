@@ -4,7 +4,8 @@
 #include "../Buffers/VertexBuffer.h"
 #include "../Essentials/Color.h"
 #include "../Essentials/Shader.h"
-#include "../Essentials/Font.h"
+//#include "../Essentials/Font.h"
+#include "../Essentials/UnicodeFont.h"
 #include "Camera2D.h"
 
 namespace zRender
@@ -26,7 +27,8 @@ namespace zRender
         void Begin();
         void End();
 
-        void DrawText(Font* font, const std::string& text, const zMath::Vector2& position, const zMath::Vector2& scale, float size, float padding, float wrap, Color color = WHITE);
+        //void DrawText(Font* font, const std::string& text, const zMath::Vector2& position, const zMath::Vector2& scale, float size, float padding, float wrap, Color color = WHITE);
+        void DrawTextAr(UnicodeFont* font, const std::string& text, const zMath::Vector2& position, const zMath::Vector2& scale, float size, float padding, float wrap, Color color = WHITE);
 
         void Render(Shader* shader, Camera2D& camera);
 

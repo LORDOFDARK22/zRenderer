@@ -13,6 +13,7 @@ namespace zRender
 		FRAMEBUFFER,
 		None
 	};
+
 	class Texture
 	{
 	private:

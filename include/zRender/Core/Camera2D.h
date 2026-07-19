@@ -15,6 +15,7 @@ namespace zRender
 		bool needsUpdate;
 
 	public:
+		Camera2D();
 		Camera2D(int width, int height);
 		
 		inline const zMath::Vector2 GetPosition() const { return position; }
@@ -31,7 +32,7 @@ namespace zRender
 
 		void SetWindowSize(int width, int height);
 
-		zMath::Vector2 ScreenCoordsToWolrd(const zMath::Vector2& screenCoords);
+		zMath::Vector2 ScreenCoordsToWorld(const zMath::Vector2& screenCoords);
 		zMath::Vector2 WorldCoordsToScreen(const zMath::Vector2& worldCoords);
 
 		void Update();

@@ -158,6 +158,8 @@ namespace zRender
 	private:
 		Window window;
 
+		static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+
 	public:
 		InputManager(Window& window);
 		~InputManager() = default;
@@ -166,7 +168,7 @@ namespace zRender
 		bool GetKeyUp(Key key);
 
 		zMath::Vector2 GetMousePosition();
-		zMath::Vector2 GetMouseScroller();
+		static zMath::Vector2 mouseScroller;
 
 		bool GetMouseButtonDown(MouseButton button);
 		bool GetMouseButtonUp(MouseButton button);

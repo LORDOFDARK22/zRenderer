@@ -20,6 +20,7 @@ namespace zRender
 		uint32_t GetUniformLocation(const std::string& uniformName);
 
 	public:
+		Shader();
 		Shader(const std::string& vertexSource, const std::string& fragmentSource);
 		Shader(const char* vertexFile, const char* fragmentFile);
 		~Shader();
@@ -43,5 +44,16 @@ namespace zRender
 
 		void Bind();
 		void Unbind();
+
+		//static
+		static std::shared_ptr<Shader> CreateSpriteBatchShader();
+		static std::shared_ptr<Shader> CreateCircleShader();
+		static std::shared_ptr<Shader> CreateDefaultShader();
+		static std::shared_ptr<Shader> CreateLineShader();
+		static std::shared_ptr<Shader> CreatePixelShader();
+		static std::shared_ptr<Shader> CreateSpritesShader();
+		static std::shared_ptr<Shader> CreateTextBatchShader();
+		static std::shared_ptr<Shader> CreateTextsShader();
+		static std::shared_ptr<Shader> CreateTriangleShader();
 	};
 }

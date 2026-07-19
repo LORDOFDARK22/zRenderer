@@ -26,9 +26,9 @@ namespace zRender
 
 		void Begin();
 		void End();
-
-		void DrawSprite(uint32_t textureID, const zMath::Vector2& position, const zMath::Vector2& scale, float rotation, Color color);
-		void DrawSpritesheet(uint32_t textureID, int frameX, int frameY, int sheetCols, int sheetRows, const zMath::Vector2& position, const zMath::Vector2& scale, float rotation, Color color);
+		// add layer && flips x,y
+		void DrawSprite(uint32_t textureID, const zMath::Vector2& position, const zMath::Vector2& scale, float rotation, Color color = WHITE);
+		void DrawSpritesheet(uint32_t textureID, int frameX, int frameY, int sheetCols, int sheetRows, const zMath::Vector2& position, const zMath::Vector2& scale, float rotation, Color color = WHITE);
 
 		void Render(Shader* shader, Camera2D& camera);
 

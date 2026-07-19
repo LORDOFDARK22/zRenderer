@@ -22,9 +22,9 @@ namespace zRender
 		void Begin();
 		void End();
 
-		void DrawTriangle(const zMath::Vector2& v1, const zMath::Vector2& v2, const zMath::Vector2& v3, Color color);
+		void DrawTriangle(const zMath::Vector2& v1, const zMath::Vector2& v2, const zMath::Vector2& v3, Color color = WHITE);
 
-		void Render(Shader* shader, Camera2D& camera, bool wirframe);
+		void Render(Shader* shader, Camera2D& camera, bool wirframe = false);
 
 	};
 }

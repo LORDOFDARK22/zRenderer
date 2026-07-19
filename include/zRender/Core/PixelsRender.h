@@ -25,7 +25,7 @@ namespace zRender
 		void Begin();
 		void End();
 
-		void DrawPixel(const zMath::Vector2& position, Color color);
+		void DrawPixel(const zMath::Vector2& position, Color color = WHITE);
 
 		void Render(Shader* shader, Camera2D& camera);
 

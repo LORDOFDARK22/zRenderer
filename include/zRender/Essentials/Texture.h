@@ -9,9 +9,7 @@ namespace zRender
 	{
 		Blended,
 		Pixel,
-		Repeated,
-		FRAMEBUFFER,
-		None
+		FRAMEBUFFER
 	};
 
 	class Texture
@@ -22,9 +20,9 @@ namespace zRender
 
 	public:
 		Texture();
-		Texture(const unsigned char* imageData, int length, bool flipVertically, TextureType type = TextureType::Blended);
 		Texture(TextureType type, int width, int height);
-		Texture(const std::string& texturePath, bool flipVertically, TextureType type = TextureType::Blended);
+		Texture(const std::string& texturePath, TextureType type = TextureType::Blended, bool flipVertically = false, bool repeated = false);
+		Texture(const unsigned char* imageData, int length, TextureType type = TextureType::Blended, bool flipVertically = false, bool repeated = false);
 		~Texture();
 
 		static std::vector<Color> GetPixelsFromImage(const std::string& texturePath);

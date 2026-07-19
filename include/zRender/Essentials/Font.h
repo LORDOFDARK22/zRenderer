@@ -19,8 +19,7 @@ namespace zRender
 	{
 	private:
 		uint32_t ID = 0;
-		std::string fontPath;
-		int width = 0, height = 0;
+		int width = 256, height = 256;
 		float size = 14.0f;
 		void* data = nullptr;
 

@@ -19,14 +19,14 @@ namespace zRender
 		std::vector<float> circles;
 
 	public:
-		CirclesRender(float lineWidth);
 		CirclesRender();
+		CirclesRender(float lineWidth);
 		~CirclesRender();
 
 		void Begin();
 		void End();
 
-		void DrawCircle(const zMath::Vector2& position, float radius, Color color);
+		void DrawCircle(const zMath::Vector2& position, float radius = 16, Color color = WHITE);
 
 		void Render(Shader* shader, Camera2D& camera, bool wireframe = false);
 

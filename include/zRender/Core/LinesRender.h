@@ -25,7 +25,7 @@ namespace zRender
 		void Begin();
 		void End();
 
-		void DrawLine(const zMath::Vector2& start, const zMath::Vector2& end, Color color);
+		void DrawLine(const zMath::Vector2& start, const zMath::Vector2& end, Color color = WHITE);
 
 		void Render(Shader* shader, Camera2D& camera);
 	};

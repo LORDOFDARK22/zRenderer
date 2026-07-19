@@ -15,6 +15,7 @@ namespace zRender
 		const uint32_t GetID() const { return ID; }
 
 		void Data(std::vector<uint32_t>& indices, bool dynamic);
+		void SubData(size_t offset, const void* data, size_t size);
 
 		void Bind();
 		void Unbind();
